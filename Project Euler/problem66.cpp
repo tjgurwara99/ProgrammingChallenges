@@ -1,3 +1,9 @@
+/*
+ * Correct algorithm  but not working
+ * due to BigInt limitations
+ * */
+
+
 #include <cstdio>
 #include <cmath>
 #include <cassert>
@@ -159,6 +165,6 @@ int main() {
     }
 
     printf("%d: %lld\n", dVal, maxMinX);
-    
+
     return 0;
 }
