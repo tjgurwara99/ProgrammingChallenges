@@ -1,58 +1,66 @@
+/* Correct answer 9ms */
 #include <cstdio>
+#include <queue>
 #include <algorithm>
 using namespace std;
 
 #define ll long long
-#define MAX 5
+#define MAX 80
 
 int A[MAX][MAX];
-ll DP[MAX][MAX];
+ll dist[MAX][MAX];
+
+vector<pair<int, int> > directions = {
+    make_pair(-1, 0), // Up
+    make_pair(1, 0),  // Down
+    make_pair(0, -1), // Left
+    make_pair(0, 1)   // Right
+};
+
+priority_queue<pair<ll, pair<int, int> > > searchNodes;
 
 void loadData() {
-    FILE* f = fopen("p082_test.txt", "r");
+    FILE* f = fopen("p083_matrix.txt", "r");
     for (int i = 0; i < MAX; i++) {
         for (int j = 0; j < MAX; j++) fscanf(f, "%d,", &A[i][j]);
     }
     fclose(f);
 }
 
-void downPass() {
-    for (int i = 1; i < MAX; i++) {
-        for (int j = 1; j < MAX; j++) {
-            DP[i][j] = A[i][j] + min(DP[i-1][j], DP[i][j-1]);
-        }
-    }
-}
-
-void upPass() {
-    for (int i = MAX-2; i >= 0; i--) {
-        for (int j = MAX-2; j >= 0; j--) {
-            DP[i][j] = min(DP[i][j], A[i][j] + min(DP[i+1][j], DP[i][j+1]));
-        }
-    }
-}
-
 int main() {
     
     loadData();
     
-    DP[0][0] = A[0][0];
-    for (int i = 1; i < MAX; i++) {
-        DP[0][i] = DP[0][i-1] + A[0][i];
-        DP[i][0] = DP[i-1][0] + A[i][0];
+    for (int i = 0; i < MAX; i++) {
+        for (int j = 0; j < MAX; j++) {
+            dist[i][j] = INFINITY;
+        }
+    }
+    dist[0][0] = A[0][0];
+    searchNodes.push(make_pair(0, make_pair(0, 0)));
+    
+    while (!searchNodes.empty()) {
+        pair<ll, pair<int, int> > newNode = searchNodes.top();
+        searchNodes.pop();
+        
+        int r = newNode.second.first;
+        int c = newNode.second.second;
+        ll d = dist[r][c];
+        
+        for (pair<int, int>& dir: directions) {
+            int cy = r + dir.first;
+            int cx = c + dir.second;
+            
+            if (cx >= MAX || cx < 0 || cy >= MAX || cy < 0) continue;
+            
+            if (dist[cy][cx] > d + A[cy][cx]) {
+                dist[cy][cx] = d + A[cy][cx];
+                searchNodes.push(make_pair(-dist[cy][cx], make_pair(cy, cx)));
+            }
+        }
     }
     
-    downPass();
-    upPass();
-    downPass();
-    upPass();
-    downPass();
-    upPass();
-    downPass();
-    upPass();
-    downPass();
-    
-    printf("%lld\n", DP[MAX-1][MAX-1]);
+    printf("%lld\n", dist[MAX-1][MAX-1]);
     
     return 0;
 }
