@@ -1,26 +1,27 @@
-/* Correct answer in 15s  (under -O2 optimisation) */
+/* Correct answer in 3s  (under -O2 optimisation) */
 #include <stdio.h>
 
 int main() {
 
-    int count = 0, i, r, j, rev;
+    int count = 0, i, c, j, rev;
+    int digits[10], l = 1;
+    digits[0] = 1;
 
     for (i = 1; i < 1000000000; ++i) {
-        if (i % 10 == 0) continue;
 
-        r = 0;
-        for (j = i; j; j /= 10) r = (r * 10) + (j % 10);
-        r += i;
-
-        rev = 1;
-        for (; r; r /= 10) {
-            if (!(r & 1)) {
-                rev = 0;
-                break;
+        if (digits[0]) {
+            c = 0;
+            for (j = 0; j < l; j++) {
+                rev = digits[j]+digits[l-j-1]+c;
+                if (!(rev & 1)) break;
+                c = rev >= 10;
             }
+            if (j == l) ++count;
         }
 
-        if (rev) count++;
+        for(j = 0; digits[j] == 9; ++j ) digits[j] = 0;
+        if (j == l) digits[l++] = 1;
+        else digits[j]++;
     }
 
     printf("%d\n", count);
