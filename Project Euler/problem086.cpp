@@ -1,3 +1,4 @@
+/* Correct answer in 50 seconds */
 #include <cstdio>
 #include <cmath>
 using namespace std;
