@@ -26,16 +26,11 @@ int main() {
     NODES[K].next = 1;
 
     int currentPos = 1;
-    
     for (int i = 1; i <= K; i++) {
         
-        for (int j = 1; j < A[i]; j++) {
-            currentPos = NODES[currentPos].next;
-        }
-        
+        for (int j = 1; j < A[i]; j++)  currentPos = NODES[currentPos].next;
         indexFill[NODES[currentPos].idx] = i;
         
-        // Remove this node
         NODES[NODES[currentPos].prev].next = NODES[currentPos].next;
         NODES[NODES[currentPos].next].prev = NODES[currentPos].prev;
         currentPos = NODES[currentPos].next;
