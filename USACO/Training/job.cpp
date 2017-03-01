@@ -4,42 +4,56 @@ PROG: job
 LANG: C++11
 */
 #include <cstdio>
+#include <algorithm>
 using namespace std;
 
-#define MAX_M 31
+#define MAX_N 1005
+#define MAX_M 32
 
 int N, M1, M2;
-int A[MAX_M], B[MAX_M];
+int machineA[MAX_M], machineB[MAX_M];
+int aFinishTime[MAX_N], bFinishTime[MAX_N];
+int timeA[MAX_M], timeB[MAX_M];
 
 int main() {
-    
-    //freopen("job.in", "r", stdin);
-    //freopen("job.out", "w", stdout);
-    
+
+    freopen("job.in", "r", stdin);
+    freopen("job.out", "w", stdout);
+
     scanf("%d %d %d", &N, &M1, &M2);
-    
-    for (int i = 0; i < M1; i++) scanf("%d", &A[i]);
-    for (int i = 0; i < M2; i++) scanf("%d", &B[i]);
-    
-    /*
-    Things to keep track of:
-    
-    1. Current time
-    2. Number of jobs in first queue
-    3. Number of jobs done at A, before B
-    4. Number of finished jobs (not really needed)
-    5. The time left for machine A to finish (0 if empty)
-    6. The time left for machine B to finish (0 if empty)
-    
-    Use a greedy strategy, take the minimum next machine until
-    number of finished jobs == N
-    
-    TWO STEPS:
-    
-    1. if Check if any of the machines at A are empty
-       -> 
-    
-    */
-    
+
+    for (int i = 0; i < M1; i++) scanf("%d", &machineA[i]);
+    for (int i = 0; i < M2; i++) scanf("%d", &machineB[i]);
+
+    int totalATime = 0, totalTime = 0;
+
+    for (int i = 0; i < N; i++) {
+        int minT = 100000, minIdx = -1;
+        for (int j = 0; j < M1; j++) {
+            if (timeA[j] + machineA[j] < minT) {
+                minT = timeA[j] + machineA[j];
+                minIdx = j;
+            }
+        }
+        aFinishTime[i] = minT;
+        timeA[minIdx] += machineA[minIdx];
+        totalATime = timeA[minIdx];
+    }
+
+    for (int i = N-1; i >= 0; i--) {
+        int minT = 100000, minIdx = -1;
+        for (int j = 0; j < M2; j++) {
+            if (timeB[j] + machineB[j] < minT) {
+                minT = timeB[j] + machineB[j];
+                minIdx = j;
+            }
+        }
+        bFinishTime[i] = minT;
+        timeB[minIdx] += machineB[minIdx];
+    }
+
+    for (int i = 0; i < N; i++) totalTime = max(totalTime, aFinishTime[i]+bFinishTime[i]);
+    printf("%d %d\n", totalATime, totalTime);
+
     return 0;
 }
