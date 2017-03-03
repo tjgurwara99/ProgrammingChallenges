@@ -1,3 +1,7 @@
+# USACO In/Out
+*.in
+*.out
+
 # VIM files
 *.swp
 
