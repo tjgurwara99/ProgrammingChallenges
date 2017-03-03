@@ -2,7 +2,7 @@
 #include <algorithm>
 using namespace std;
 
-#define MAXN 100000
+#define MAXN 1000000
 
 int N, K;
 int A[MAXN], B[MAXN];
@@ -23,7 +23,7 @@ int main() {
         if (i < K) {
             total += A[C[i].second];
         } else {
-            total += B[C[i].second];
+            total += min(A[C[i].second], B[C[i].second]);
         }
     }
     
