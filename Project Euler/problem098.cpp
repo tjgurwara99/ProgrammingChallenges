@@ -1,3 +1,4 @@
+/* Correct answer in 25s */
 #include <cstdio>
 #include <cmath>
 #include <cstring>
