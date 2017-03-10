@@ -65,6 +65,6 @@ void searchA(int idx, int j) {
 
 int main() {
     searchA(0, 0);
-    cout << count << endl;
+    cout << count/2 << endl;
     return 0;
 }
