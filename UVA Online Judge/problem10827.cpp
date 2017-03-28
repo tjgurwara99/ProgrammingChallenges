@@ -21,26 +21,18 @@ int main() {
             for (int l = 1; l <= N; l++) {
                 int v = (u+l-1) % N;
                 for (int r = 0; r < N; r++) rowSum[r] += grid[r][v];
-                
-                int currentSum = 0, lastStart = -1;
-                bool reachedEnd = false;
-                
-                for (int r = 0; r != lastStart; r++) {
-                    if (r == N) {
-                        r = -1;
-                        reachedEnd = true;
-                        continue;
-                    }
-                    
-                    if (currentSum == 0) lastStart = r;
-                    currentSum += rowSum[r];
-                    
-                    if (currentSum > maxSum) maxSum = currentSum;
-                    
-                    if (currentSum < 0) {
-                        currentSum = 0;
-                        if (reachedEnd) break;
-                    }
+
+                for (int r = 0; r < N; r++) {
+                    int s = r;
+                    int currentSum = 0;
+                    do {
+                        currentSum += rowSum[s];
+
+                        if (currentSum > maxSum) maxSum = currentSum;
+                        else if (currentSum < 0) currentSum = 0;
+
+                        s = (s+1) % N;
+                    } while (s != r);
                 }
             }
         }
