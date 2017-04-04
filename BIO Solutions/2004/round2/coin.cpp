@@ -42,7 +42,8 @@ int doItFaster() {
         }
 
         if (alternating) {
-            moves += doIt();
+            //moves += doIt();
+            moves += n-1;
             break;
         }
 
