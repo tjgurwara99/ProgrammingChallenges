@@ -1,47 +1,43 @@
 #include <cstdio>
+#define ll long long
+
+inline int mod(int m, int d) {
+    m %= d;
+    if (m < 0) m += d;
+    return m;
+}
 
 int main() {
 
-    int N, Q, A[200], t = 0;
-    long long DP[11][200][21][20]; 
+    int N, Q, D, M, A[200], t = 0;
+    ll DP[11][201][20];
 
     while (scanf("%d %d", &N, &Q), N & Q) {
         
-        for (int m = 0; m < 11; m++) {
-            for (int i = 0; i < N; i++) {
-                for (int d = 0; d < 21; d++) {
-                    for (int r = 0; r < d; r++) {
-                        DP[m][i][d][r] = 0;
-                    }
-                }
-            }
-        }
-        
-        for (int i = 0; i < N; i++) {
-            scanf("%d", &A[i]);
-            for (int d = 1; d <= 20; d++) DP[1][i][d][A[i]%d] = 1;
-        }
-
-        for (int m = 2; m <= 10; m++) {
-            for (int i = 0; i <= N-m; i++) {
-                for (int d = 1; d <= 20; d++) {
-                    for (int r = 0; r < d; r++) {
-                        int c = (d-((r+A[i])%d))%d;
-                        for (int j = i+1; j <= N-m+1; j++) {
-                            DP[m][i][d][r] += DP[m-1][j][d][c];
-                        }
-                    }
-                }
-            }
-        }
+        for (int i = 0; i < N; i++)  scanf("%d", &A[i]);
 
         printf("SET %d:\n", ++t);
         for (int q = 0; q < Q; q++) {
-            int D, M;
             scanf("%d %d", &D, &M);
-            long long ans = 0;
-            for (int i = 0; i <= N-M; i++) ans += DP[M][i][D][0];
-            printf("QUERY %d: %lld\n", q+1, ans);
+            
+            // f(m, i, r) = no. of ways to choose m from [i..] summing to r mod D
+            // f(m, i, r) = f(m-1, i+1, r1) + f(m, i+1, r2)
+            for (int i = 0; i <= N; i++) {
+                DP[0][i][0] = 1;
+                for (int r = 1; r < D; r++) DP[0][i][r] = 0;
+            }
+            
+            for (int m = 1; m <= M; m++) {
+                for (int i = N-m; i >= 0; i--) {
+                    for (int r = 0; r < D; r++) {
+                        int c = mod(r - A[i], D);
+                        DP[m][i][r] = DP[m-1][i+1][c];
+                        if (i < N-m) DP[m][i][r] += DP[m][i+1][r];
+                    }
+                }
+            }
+            
+            printf("QUERY %d: %lld\n", q+1, DP[M][0][0]);
         }
     }
 
