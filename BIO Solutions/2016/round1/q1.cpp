@@ -1,7 +1,7 @@
 #include <cstdio>
 
 int main() {
-    int l = 1, m = 0, r = 0, s = 1, a, b;
+    int l = 1, m = 0, r = 0, s = 1, a = 1, b = 1;
     char S[20];
     scanf("%s", S);
     
