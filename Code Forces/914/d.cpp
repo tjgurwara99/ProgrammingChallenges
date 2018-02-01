@@ -42,50 +42,24 @@ void update(int n, int i, int j, int idx) {
     }
 }
 
-int totalGCD(int n, int i, int j, int l, int r) {
-    
-    if (l > j || r < i) return -1;
-    
-    int mid = (i+j)/2;
-    
-    if (i >= l && j <= r) {
-        return gcdTree[n];
-    } else {
-        int a = totalGCD(2*n, i, mid, l, r);
-        int b = totalGCD(2*n+1, mid+1, j, l, r);
-        if (a < 0) return b;
-        if (b < 0) return a;
-        return gcd(a, b);
-    }
-}
-
+// 0 = false, 1 = true with no change, 2 = true with change
 int almostCorrect(int n, int i, int j, int l, int r, int x) {
     
-    cout << n << " " << i << " " << j << " " << l << " " << r << " " << x << endl;
+    // cout << n << " " << i << " " << j << " " << l << " " << r << " " << x << endl;
     
-    if (l > j || r < i) return -1;
+    if (l > j || r < i) return 1;
+    
+    if (gcdTree[n] % x == 0) return 1;
+    
+    if (i == j) return 2;
     
     int mid = (i+j)/2;
+    int a = almostCorrect(2*n, i, mid, l, r, x);
+    int b = almostCorrect(2*n+1, mid+1, j, l, r, x);
     
-    if (i >= l && j <= r) {
-        if (i==j || gcdTree[n] % x == 0) return 1;
-        if (gcdTree[2*n]%x==0 && almostCorrect(2*n+1, mid+1, j, l, r, x)) return 1;
-        if (gcdTree[2*n+1]%x==0 && almostCorrect(2*n, i, mid, l, r, x)) return 1;
-        
-        return 0;
-        
-    } else {
-        
-        int a = almostCorrect(2*n, i, mid, l, r, x);
-        if (a == 0) return 0;
-        
-        int b = almostCorrect(2*n+1, mid+1, j, l, r, x);
-        if (b == 0) return 0;
-        
-        if (a == 1 && totalGCD(2*n+1, mid+1, j, mid, r)%x==0) return 1;
-        if (b == 1 && totalGCD(2*n, i, mid, l, mid)%x==0) return 1;
-        return 0;
-    }
+    if (a == 1) return b;
+    if (b == 1) return a;
+    return 0;
 }
 
 int main() {
