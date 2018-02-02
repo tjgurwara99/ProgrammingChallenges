@@ -55,6 +55,8 @@ int almostCorrect(int n, int i, int j, int l, int r, int x) {
     
     int mid = (i+j)/2;
     int a = almostCorrect(2*n, i, mid, l, r, x);
+    if (a == 0) return 0;
+    
     int b = almostCorrect(2*n+1, mid+1, j, l, r, x);
     
     if (a == 1) return b;
