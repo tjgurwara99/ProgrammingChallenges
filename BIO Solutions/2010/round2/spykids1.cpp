@@ -3,13 +3,9 @@ using namespace std;
 
 #define MAXK 20000
 
-int K, A[MAXK];
-int indexFill[MAXK];
+int K, A[MAXK], indexFill[MAXK];
 
-struct node {
-    int idx, prev, next;
-};
-
+struct node { int prev, next; };
 node NODES[MAXK];
  
 int main() {
@@ -17,7 +13,8 @@ int main() {
     scanf("%d", &K);
     for (int i = 1; i <= K; i++) {
         scanf("%d", &A[i]);
-        NODES[i].idx = i;
+        A[i]--;
+        
         NODES[i].prev = i-1;
         NODES[i].next = i+1;
     }
@@ -27,9 +24,9 @@ int main() {
 
     int currentPos = 1;
     for (int i = 1; i <= K; i++) {
-        
-        for (int j = 1; j < A[i]; j++)  currentPos = NODES[currentPos].next;
-        indexFill[NODES[currentPos].idx] = i;
+        int steps = A[i] % (K-i+1);
+        while (steps--) currentPos = NODES[currentPos].next;
+        indexFill[currentPos] = i;
         
         NODES[NODES[currentPos].prev].next = NODES[currentPos].next;
         NODES[NODES[currentPos].next].prev = NODES[currentPos].prev;
