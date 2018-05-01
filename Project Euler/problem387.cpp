@@ -1,64 +1,60 @@
-/* Not working yet */
 #include <cstdio>
 #include <vector>
+#include <queue>
 using namespace std;
 
-#define MAX 10000000
-#define ll unsigned long long
+#define MAX_PRIME 10000000
+#define MAX_HARSHAD ((long long)1e13)
+#define ll long long
 
 vector<ll> primes;
-bool isComposite[MAX];
+bool isComposite[MAX_PRIME];
 
-int digitSum(ll n) {
+inline int digitSum(ll n) {
     int s = 0;
     for (; n; n /= 10) s += n % 10;
     return s;
 }
 
-inline bool isRTHarshad(ll n) {
-    n /= 10;
-    if (n == 0) return false;
-
-    int s = digitSum(n);
-    if (n % s != 0 || isComposite[n / s]) return false;
-
-    for (; n; n /= 10) {
-        if (n % s != 0) return false;
-        s -= n % 10;
+inline bool isPrime(ll n) {
+    if (n < MAX_PRIME) return !isComposite[n];
+    for (int p = 0; primes[p]*primes[p] <= n; p++) {
+        if (n % primes[p] == 0) return false;
     }
     return true;
 }
 
-void genPrimes() {
-    isComposite[0] = isComposite[1] = true;
-    for (ll i = 0; i < MAX; i++) {
-        if (isComposite[i]) continue;
-        primes.push_back(i);
-        for (ll j = i+i; j < MAX; j += i) isComposite[j] = true;
-    }
-}
-
-bool isHarshad(ll n) {
-    return n % digitSum(n) == 0;
-}
-
 int main() {
 
-    genPrimes();
-
-    ll sum = 0;
-
-    for (ll p: primes) {
-        if (isRTHarshad(p)) sum += p;
+    isComposite[0] = isComposite[1] = true;
+    for (ll i = 0; i < MAX_PRIME; i++) {
+        if (isComposite[i]) continue;
+        primes.push_back(i);
+        for (ll j = i*i; j < MAX_PRIME; j += i) isComposite[j] = true;
     }
-    printf("%lld\n", sum);
-
-    int count = 0;
-
-    for (int i = 10000000; i < 100000000; i++) {
-        if (isHarshad(i)) count++;
+    
+    queue<ll> hs;
+    for (int i = 1; i < 10; i++) hs.push(i);
+    
+    ll ans = 0;
+    
+    while (!hs.empty()) {
+        ll h = hs.front();
+        hs.pop();
+        int s = digitSum(h);
+        bool strong = isPrime(h/s);
+        
+        for (int i = 0; i < 10; i++) {
+            ll h2 = h*10+i;
+            if (strong && isPrime(h2)) ans += h2;
+            
+            if (h2 >= MAX_HARSHAD) continue;
+            if (h2 % (s + i)) continue;
+            hs.push(h2);
+        }
     }
-    printf("%d\n", count);
+    
+    printf("%lld\n", ans);
 
     return 0;
 }
