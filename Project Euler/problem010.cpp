@@ -1,43 +1,17 @@
-#include<iostream>
-#include<math.h>
-#include<stdint.h>
-
+#include <iostream>
 using namespace std;
 
-void primeLim(size_t lim)
-{
-    int64_t sum=0;
-    int i,j;
-    bool* primes = NULL;
-    primes  = new bool[lim];
-    for(i = 0;i<lim;++i)
-    {
-        primes[i] = true;
-    }
-    for(i=2;i<sqrt(lim);++i)
-    {
-        if(primes[i] == true)
-        {
-            for(j=i*i;j<lim;j+=i)
-            {
-                primes[j]=false;
-            }
-        }
-    }
-    for(i=0;i<lim;i++)
-    {
-        if(primes[i] == true)
-        {
-            sum+=i;
-        }
-    }
-    delete [] primes;
-    cout<<sum;
-}
+#define N 2000000
 
-int main()
-{
-    primeLim(2000000);
+bool isComposite[N];
+
+int main() {
+    long long sum = 0;
+    for (int i = 2; i < N; i++) {
+      if (isComposite[i]) continue;
+      sum += i;
+      for (int j = i; j < N; j+=i) isComposite[j] = true;
+    }
+    cout << sum << endl;
     return 0;
 }
-    

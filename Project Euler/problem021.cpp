@@ -1,5 +1,4 @@
-#include<iostream>
-
+#include <iostream>
 
 int sum_of_d(int num){
 	int sum = 1;
@@ -26,22 +25,7 @@ int sum_of_d(int num){
 	return sum;
 }
 
-int sum_of_divisors(int num){
-	return sum_of_d(num) - num;
-}
-
-/*
-int sum_of_divisors(int num){
-	int sum = 0;
-	for(int i=1; i<=num/2; ++i){
-		if(num%i == 0){
-			sum += i;
-		}
-	}
-	return sum;
-}
-*/
-
+int sum_of_divisors(int num) { return sum_of_d(num) - num; }
 
 int main(){
 	int sum = 0;

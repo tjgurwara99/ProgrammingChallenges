@@ -1,12 +1,9 @@
-#include<iostream>
-#include<stdlib.h>
-#include<math.h>
-
-
+#include <iostream>
+#include <stdlib.h>
+#include <math.h>
 using namespace std;
 
-class problem_12
-{
+class problem_12 {
     private:
         long long tNum;
         int divs;
@@ -17,32 +14,26 @@ class problem_12
             return result;
         }
         int sqrt;
+
     public:
-        problem_12()
-        {
+        problem_12() {
             tNum = 0;
             divs = 0;
             count= 1;
             sqrt = 0;
         }
         
-        void setNum(long long a)
-        {   
+        void setNum(long long a) {   
             tNum = triNum(a);
         }
-        void start()
-        {
-            while(divs<500)
-            {
+        void start() {
+            while (divs<500) {
                 divs = 0;
                 setNum(count);                
                 sqrt = pow(tNum, 0.5);
-                for(int i=1;i<sqrt;i++)
-                {
-                    if(tNum%i == 0)
-                        divs += 2;
-                    if(sqrt*sqrt == tNum)
-                        divs = divs - 1;
+                for (int i=1;i<sqrt;i++) {
+                    if (tNum%i == 0) divs += 2;
+                    if (sqrt*sqrt == tNum) divs = divs - 1;
                 }
                 count++;
                     
@@ -51,8 +42,7 @@ class problem_12
         }
 };
 
-int main()
-{
+int main() {
     problem_12 first;
     first.start();
     return 0;
