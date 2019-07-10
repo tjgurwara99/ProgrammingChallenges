@@ -1,45 +1,16 @@
-#include<iostream>
-#include<cmath>
-
+#include <iostream>
 using namespace std;
 
-long int evenFib(int n)
-{
-    if (n < 1)
-       return n;
-    if (n == 1) 
-       return 2;
- 
-    // calculation of fn= 4*(fn-1) + fn-2, I will probably create a Readme of How this formula is derived
-    return ((4*evenFib(n-1)) + evenFib(n-2));  
-}
+#define MAX 4000000
 
-void sumEvenFib(long n)
-{
-    long sum=0,fib=0;
-    int i=1;
-    bool flag=true;
-    while(flag)
-    {
-        fib = evenFib(i);
-        i++;
-        if(fib<=n)
-        {
-            flag = true;
-            sum += fib;     // be carefull here!! I would recommend you should try to optimise this for best performance
-        }
-        else
-        {
-            flag = false;
-        }
+int main() {
+    long long sum = 0, fibA = 0, fibB = 1;
+    while (fibB <= MAX) {
+        sum += fibB;
+        ll fibC = fibA + fibB;
+        fibA = fibB;
+        fibB = fibC;
     }
-    cout<<sum<<endl;
-}
-
-
-int main()
-{
-    const int num = 4000000;
-    sumEvenFib(num);   // this program takes less 0.004 s to execute in a laptop with linux os with 4 gb ram and i3 64 bit processor
+    cout << sum << endl;
     return 0;
 }

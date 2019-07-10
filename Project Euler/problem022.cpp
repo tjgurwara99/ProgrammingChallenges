@@ -5,8 +5,6 @@
 #include<string>
 #include<sstream>
 
-
-
 long long alpha(char a){
 	return (int)a - '@';
 }
@@ -22,7 +20,7 @@ long long count(std::string str){
 
 int main(){
 	std::vector<std::string> names;
-	std::fstream file("names.txt", std::fstream::in);
+	std::fstream file("p022.txt", std::fstream::in);
 	std::string str;
 	long long ans=0;
 	while(getline(file,str,'"')){

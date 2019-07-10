@@ -1,6 +1,5 @@
-#include<fstream>
-#include<string>
-
+#include <fstream>
+#include <string>
 using namespace std;
 
 void array_push(int * a){
@@ -20,8 +19,9 @@ void array_push(int * a){
 	}
 	printf("\n");
 }
+
 int main(){
-	fstream file("./Taj.txt", fstream::in);
+	fstream file("./p013.txt", fstream::in);
 	int v[100][50];
 	string line;
 	int i,j,c=0;
@@ -50,4 +50,3 @@ int main(){
 	}
 	return 0;
 }
-

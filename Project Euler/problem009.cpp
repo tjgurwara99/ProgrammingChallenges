@@ -1,5 +1,6 @@
-#include<iostream>
-#include<math.h>
+#include <iostream>
+#include <math.h>
+using namespace std;
 
 /* I am using a mathematically proved formula of pythagorean triplet formula
 
@@ -18,42 +19,21 @@
   i will only be using the positive formula because we want the value of m to be positive
   finally abc = (m^4 - n^4)(2mn)
   
-
   you can find a lot of different ways to get pythagorian triplets online and create a different algorithm
   I found this one to be the fastest in my machine, faster than even the first program :P (I have no idea why though)
 */  
 
+bool isInteger(float num) { return (int)num == num; }
 
-using namespace std;
-
-bool iorf(float num)
-{
-    int newnum = num;
-    return (newnum == num);
-}
-
-void pyth()
-{
-    int n=1,ans;
-    float sq,m;
-    bool check=false;
-    while(!check)
-    {
+int main() {
+    int n = 1;
+    float m;
+    do {
         n++;
-        sq = n*n + 2000;
-        m= (sqrt(sq)-n)/2;
-        if(iorf(m))
-            check = true;
-    }
-    ans = (m*m*m*m - n*n*n*n)*2*m*n;
-    cout<<ans;
-}
-
-int main()
-{
-    pyth();
+        float sq = n*n + 2000;
+        m = (sqrt(sq)-n)/2;
+    } while (!isInteger(m));
+    int ans = (m*m*m*m - n*n*n*n)*2*m*n;
+    cout << ans << endl;
     return 0;
 }
-        
-    
-    
