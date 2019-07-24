@@ -43,3 +43,6 @@
 
 # Java / Scala files
 *.class
+
+# Haskell files
+*.hi
