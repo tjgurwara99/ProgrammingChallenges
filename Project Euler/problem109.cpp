@@ -3,10 +3,10 @@ using namespace std;
 
 #define N 100
 
-int DP[N+1][4];
+int DP[N][4];
 
 inline void addValue(int p) {
-  for (int i = p; i <= N; i++) {
+  for (int i = p; i < N; i++) {
     DP[i][2] += DP[i-p][1];
     DP[i][3] += DP[i-p][2];
   }
@@ -25,7 +25,7 @@ int main() {
   addValue(50);
 
   int ans = 0;
-  for (int i = 1; i <= N; i++) {
+  for (int i = 1; i < N; i++) {
     for (int d = 1; d <= 3; d++) ans += DP[i][d];
   }
   cout << ans << endl;
