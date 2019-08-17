@@ -15,8 +15,9 @@ primes = 2 : filter (isPrime primes) [3,5..]
   where isPrime (p:ps) n = p*p > n || n `mod` p /= 0 && isPrime ps n
 
 s :: Int -> Int -> Integer
-s p1 p2 = 100*(fromIntegral x)+(fromIntegral p1)
-  where x = ((p2-p1)*(modInv 100 p2)) `mod` p2
+s p1 p2 = (fromIntegral n)*(fromIntegral x)+(fromIntegral p1)
+  where x = ((p2-p1)*(modInv n p2)) `mod` p2
+        n = 10 ^ (length $ show p1)
 
 solve :: Int -> Integer
 solve n = sum $ zipWith s ps (tail ps)
