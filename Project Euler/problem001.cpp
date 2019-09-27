@@ -1,11 +1,17 @@
 #include <iostream>
 using namespace std;
+// This is the limit from the problem
+#define LIMIT 1000
+
+int sum_multiple(int value){
+	int sum = 0;
+	for(int i=value; i<LIMIT; i+=value){
+		sum += i;
+	}
+	return sum;
+}
 
 int main() {
-    int num = 1000, sum = 0; 
-    for (int i = 3; i < num; i++) {
-        if (i % 5 == 0 || i % 3 == 0) sum += i;
-    }
-    cout << sum << endl;
+    cout << sum_multiple(3) + sum_multiple(5) - sum_multiple(15) << endl;
     return 0;
 }
