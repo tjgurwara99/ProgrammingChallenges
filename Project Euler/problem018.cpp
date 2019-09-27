@@ -13,7 +13,6 @@ std::vector<int> space(std::string line){
     return result;
 }
 
-
 int main(){
     std::vector<std::vector<int>> v;
     std::ifstream nums;

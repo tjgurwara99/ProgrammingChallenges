@@ -4,6 +4,8 @@
 int N, R[MAXN][2];
 int DP[MAXN][MAXN + 1][3];
 // DP => [left pos (0 to N-1), crops left (0-N), right pos state]
+// right states: 0 => rightPos=leftPos, 1=>rightPos=leftPos+1, 2=>rightPos=leftPos-1
+// (space saving because other states reduce down to one of these 3)
 
 int maxFertility(int leftPos, int cropsLeft, int rightState) {
     
@@ -72,7 +74,7 @@ int maxFertility(int leftPos, int cropsLeft, int rightState) {
             
             // Pick right down
             int a = R[leftPos-1][1] + R[leftPos][1];
-            a += maxFertility(leftPos+1, cropsLeft-1, 0);
+            a += maxFertility(leftPos, cropsLeft-1, 1);
             
             // Pick nothing
             int b = maxFertility(leftPos, cropsLeft, 0);

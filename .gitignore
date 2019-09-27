@@ -1,3 +1,9 @@
+# Mac files
+.DS_Store
+
+# Scala Metals
+.metals
+
 # USACO In/Out
 *.in
 *.out
@@ -37,3 +43,6 @@
 
 # Java / Scala files
 *.class
+
+# Haskell files
+*.hi
