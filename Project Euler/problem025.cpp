@@ -13,9 +13,7 @@ struct _1000digit {
 			this->data[i] = 0;
 		}
 	}
-
 	_1000digit& operator=(_1000digit a) { this->data=_1000digit(a).data; return *this;}
-
 	_1000digit& operator=(int a) {
 		int i=SIZE-1;
 		while(SIZE - 1 - i != SIZE - 1) {
@@ -38,7 +36,6 @@ struct _1000digit {
 	}
 
 	void print(){
-
 		for(int i = 0; i< SIZE; ++i){
 			std::cout<<this->data[i];
 		}
@@ -58,7 +55,7 @@ int main(){
 		arr2 = arr3;
 		count++;
 	}
-	std::cout<<count<<std::endl;
+	std::cout<< "The 1000digit fibonacci number occers on " << count << "iteration" <<std::endl;
 	arr3.print();
 	return 0;
 }
